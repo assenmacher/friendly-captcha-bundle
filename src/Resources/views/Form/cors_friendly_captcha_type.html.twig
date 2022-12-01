@@ -1,0 +1,17 @@
+{%- block cors_friendly_captcha_type_widget -%}
+    {% if form.vars.use_local_script_files is defined and form.vars.use_local_script_files %}
+        <script type="module" src="{{ asset('/bundles/corsfriendlycaptcha/js/friendlycaptcha_widget.module.min.js') }}" async defer></script>
+        <script src="{{ asset('/bundles/corsfriendlycaptcha/js/friendlycaptcha_widget.min.js') }}" async defer></script>
+    {% else %}
+        <script type="module" src="https://unpkg.com/friendly-challenge@0.9.8/widget.module.min.js" async defer></script>
+        <script nomodule src="https://unpkg.com/friendly-challenge@0.9.8/widget.min.js" async defer></script>
+    {% endif %}
+    <div class="frc-captcha"
+         data-sitekey="{{ form.vars.sitekey }}"
+         data-solution-field-name="{{ form.vars.full_name }}"
+            {% for type, value in form.vars.friendly_captcha %}
+                data-{{ type }}="{{ value }}"
+            {% endfor %}
+    >
+    </div>
+{%- endblock cors_friendly_captcha_type_widget -%}

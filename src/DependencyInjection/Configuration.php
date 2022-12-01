@@ -20,6 +20,7 @@ final class Configuration implements ConfigurationInterface
                 ->scalarNode('secret')->cannotBeEmpty()->isRequired()->end()
                 ->scalarNode('sitekey')->cannotBeEmpty()->isRequired()->end()
                 ->booleanNode('use_eu_endpoints')->defaultTrue()->end()
+                ->booleanNode('use_local_script_files')->defaultTrue()->end()
                 ->arrayNode('puzzle')
                     ->addDefaultsIfNotSet()
                     ->children()
