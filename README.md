@@ -37,7 +37,11 @@ cors_friendly_captcha:
     sitekey: here_is_your_sitekey
     secret: here_is_your_secret
     use_eu_endpoints: true|false
+    use_local_script_files: true|false
 ```
+Local and remote script files versions are 0.9.8
+
+
 
 #### Optionally, change endpoints
 
@@ -49,4 +53,23 @@ cors_friendly_captcha:
   validation: 
     endpoint: https://api.friendlycaptcha.com/api/v1/siteverify
     eu_endpoint: https://eu-api.friendlycaptcha.eu/api/v1/siteverify
+```
+
+#### Add formtype to your form builder
+
+```php
+use CORS\Bundle\FriendlyCaptchaBundle\Form\Type\FriendlyCaptchaType;
+use CORS\Bundle\FriendlyCaptchaBundle\Validator\FriendlyCaptchaValid;
+
+$builder->add('captcha', FriendlyCaptchaType::class, [
+    'label' => false,
+    'mapped' => false,
+    'lang'    => 'de',
+    'constraints' => array(
+        new FriendlyCaptchaValid()
+    ),
+]);
+
+
+
 ```

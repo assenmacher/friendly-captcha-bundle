@@ -12,20 +12,47 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class FriendlyCaptchaType extends AbstractType
 {
+    /**
+     * @var string
+     */
     protected $sitekey;
+
+    /**
+     * @var string
+     */
+    protected $useLocalScriptFiles;
+
+    /**
+     * @var string
+     */
     protected $endpoint;
 
-    public function __construct(string $sitekey, string $endpoint)
+    /**
+     * @param string $sitekey
+     * @param string $useLocalScriptFiles
+     * @param string $endpoint
+     */
+    public function __construct(string $sitekey, string $useLocalScriptFiles, string $endpoint)
     {
         $this->sitekey = $sitekey;
+        $this->useLocalScriptFiles = $useLocalScriptFiles;
         $this->endpoint = $endpoint;
     }
 
-    public function getParent()
+    /**
+     * @return string
+     */
+    public function getParent(): string
     {
         return HiddenType::class;
     }
 
+    /**
+     * @param FormView $view
+     * @param FormInterface $form
+     * @param array $options
+     * @return void
+     */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $fcValues = array_filter([
@@ -35,10 +62,15 @@ final class FriendlyCaptchaType extends AbstractType
             'callback' => $options['callback'] ?? null,
         ]);
 
-        $view->vars['sitekey'] = $this->sitekey;
-        $view->vars['friendly_captcha'] = $fcValues;
+        $view->vars['sitekey']                = $this->sitekey;
+        $view->vars['use_local_script_files'] = $this->useLocalScriptFiles;
+        $view->vars['friendly_captcha']       = $fcValues;
     }
 
+    /**
+     * @param OptionsResolver $resolver
+     * @return void
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
@@ -50,11 +82,17 @@ final class FriendlyCaptchaType extends AbstractType
         $resolver->setAllowedValues('start', ['auto', 'focus', 'none']);
     }
 
-    public function getBlockPrefix()
+    /**
+     * @return string
+     */
+    public function getBlockPrefix(): string
     {
-        return 'cors_friendly_catcha_type';
+        return 'cors_friendly_captcha_type';
     }
 
+    /**
+     * @return string
+     */
     public function getSiteKey(): string
     {
         return $this->sitekey;

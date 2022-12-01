@@ -11,6 +11,7 @@ services:
     CORS\Bundle\FriendlyCaptchaBundle\Form\Type\FriendlyCaptchaType:
         arguments:
             - '%cors.friendly_captcha.sitekey%'
+            - '%cors.friendly_captcha.use_local_script_files%'
             - '%cors.friendly_captcha.endpoint.puzzle%'
         tags:
             - { name: form.type }
