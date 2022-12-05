@@ -13,6 +13,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 final class FriendlyCaptchaType extends AbstractType
 {
     /**
+     * Enable captcha?
+     *
+     * @var bool
+     */
+    protected $enabled;
+
+    /**
      * @var string
      */
     protected $sitekey;
@@ -29,12 +36,14 @@ final class FriendlyCaptchaType extends AbstractType
 
     /**
      * @param string $sitekey
+     * @param bool   $enabled               Recaptcha status
      * @param string $useLocalScriptFiles
      * @param string $endpoint
      */
-    public function __construct(string $sitekey, string $useLocalScriptFiles, string $endpoint)
+    public function __construct(string $sitekey, bool $enabled, string $useLocalScriptFiles, string $endpoint)
     {
         $this->sitekey = $sitekey;
+        $this->enabled = $enabled;
         $this->useLocalScriptFiles = $useLocalScriptFiles;
         $this->endpoint = $endpoint;
     }
@@ -57,9 +66,10 @@ final class FriendlyCaptchaType extends AbstractType
     {
         $fcValues = array_filter([
             'puzzle-puzzle-endpoint' => $this->endpoint,
-            'lang' => $options['lang'] ?? null,
-            'start' => $options['start'] ?? null,
-            'callback' => $options['callback'] ?? null,
+            'enabled'                => $this->enabled,
+            'lang'                   => $options['lang'] ?? null,
+            'start'                  => $options['start'] ?? null,
+            'callback'               => $options['callback'] ?? null,
         ]);
 
         $view->vars['sitekey']                = $this->sitekey;

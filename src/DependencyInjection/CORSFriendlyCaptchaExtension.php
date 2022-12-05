@@ -38,6 +38,7 @@ final class CORSFriendlyCaptchaExtension extends Extension implements PrependExt
             $verificationEndpoint = $configs['validation']['endpoint'];
         }
 
+        $container->setParameter('cors.friendly_captcha.enabled', $configs['enabled']);
         $container->setParameter('cors.friendly_captcha.secret', $configs['secret']);
         $container->setParameter('cors.friendly_captcha.sitekey', $configs['sitekey']);
         $container->setParameter('cors.friendly_captcha.use_local_script_files', $configs['use_local_script_files']);

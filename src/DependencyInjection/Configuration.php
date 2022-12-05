@@ -17,6 +17,7 @@ final class Configuration implements ConfigurationInterface
         $rootNode
             ->addDefaultsIfNotSet()
             ->children()
+                ->booleanNode('enabled')->defaultTrue()->end()
                 ->scalarNode('secret')->cannotBeEmpty()->isRequired()->end()
                 ->scalarNode('sitekey')->cannotBeEmpty()->isRequired()->end()
                 ->booleanNode('use_eu_endpoints')->defaultTrue()->end()
