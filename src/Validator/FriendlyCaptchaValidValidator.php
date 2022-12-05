@@ -13,6 +13,13 @@ use Exception as Exception;
 class FriendlyCaptchaValidValidator extends ConstraintValidator
 {
     /**
+     * Enable captcha?
+     *
+     * @var bool
+     */
+    protected $enabled;
+
+    /**
      * @var HttpClientInterface
      */
     protected $httpClient;
@@ -36,13 +43,15 @@ class FriendlyCaptchaValidValidator extends ConstraintValidator
      * @param HttpClientInterface $httpClient
      * @param string $secret
      * @param string $sitekey
+     * @param bool   $enabled                      Recaptcha status
      * @param string $endpoint
      */
-    public function __construct(HttpClientInterface $httpClient, string $secret, string $sitekey, string $endpoint)
+    public function __construct(HttpClientInterface $httpClient, string $secret, string $sitekey, bool $enabled, string $endpoint)
     {
         $this->httpClient = $httpClient;
         $this->secret = $secret;
         $this->sitekey = $sitekey;
+        $this->enabled = $enabled;
         $this->endpoint = $endpoint;
     }
 
@@ -53,6 +62,11 @@ class FriendlyCaptchaValidValidator extends ConstraintValidator
      */
     public function validate($value, Constraint $constraint)
     {
+        // if captcha is disabled, always valid
+        if (!$this->enabled) {
+            return;
+        }
+
         if (!$constraint instanceof FriendlyCaptchaValid) {
             throw new UnexpectedTypeException($constraint, FriendlyCaptchaValid::class);
         }

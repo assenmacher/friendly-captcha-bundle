@@ -38,6 +38,7 @@ cors_friendly_captcha:
     secret: here_is_your_secret
     use_eu_endpoints: true|false
     use_local_script_files: true|false
+    enabled: true|false
 ```
 Local and remote script files versions are 0.9.8
 
