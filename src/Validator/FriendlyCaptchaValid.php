@@ -14,6 +14,16 @@ class FriendlyCaptchaValid extends Constraint
     public $message = 'Friendly Captcha is Invalid';
 
     /**
+     * @var string
+     */
+    public $sitekey = null;
+
+    /**
+     * @var string
+     */
+    public $secret = null;
+
+    /**
      * @return string
      */
     public function validatedBy(): string

@@ -73,10 +73,14 @@ class FriendlyCaptchaValidValidator extends ConstraintValidator
 
         try
         {
+            $secret  = $constraint->secret ?: $this->secret;
+            $sitekey = $constraint->sitekey ?: $this->sitekey;
+
+
             $response = $this->httpClient->request('POST', $this->endpoint, [
                 'body' => [
-                    'secret' => $this->secret,
-                    'sitekey' => $this->sitekey,
+                    'secret' => $secret,
+                    'sitekey' => $sitekey,
                     'solution' => $value,
                 ],
             ]);
