@@ -72,7 +72,7 @@ final class FriendlyCaptchaType extends AbstractType
             'callback'               => $options['callback'] ?? null,
         ]);
 
-        $view->vars['sitekey']                = $this->sitekey;
+        $view->vars['sitekey']                = $options['sitekey'] ?? $this->sitekey;
         $view->vars['use_local_script_files'] = $this->useLocalScriptFiles;
         $view->vars['friendly_captcha']       = $fcValues;
     }
@@ -85,6 +85,7 @@ final class FriendlyCaptchaType extends AbstractType
     {
         $resolver->setDefaults([
             'lang' => null,
+            'sitekey' => null,
             'start' => 'focus',
             'callback' => null,
         ]);
